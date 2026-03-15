@@ -2,13 +2,15 @@
 ;; SPDX-License-Identifier: Apache-2.0
 
 (defpackage #:cl-crypto-random.test
-  (:use #:cl)
+  (:use #:cl #:cl-crypto-random)
   (:export #:run-tests))
 
 (in-package #:cl-crypto-random.test)
 
 (defun run-tests ()
-  (format t "Running tests for cl-crypto-random...~%")
-  ;; We verify that the system loads correctly, which is 90% of the battle for these stubs.
-  (assert t)
+  (format t "Executing functional test suite for cl-crypto-random...~%")
+  (assert (integerp (simple-sha1-chunk 12345)))
+  (assert (constant-time-equal "password" "password"))
+  (assert (not (constant-time-equal "pass" "fail")))
+  (format t "All functional tests passed!~%")
   t)

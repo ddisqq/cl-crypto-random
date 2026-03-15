@@ -74,3 +74,19 @@ Returns (values processed-results error-alist)."
 (defun xor-encrypt (data key) "Simple XOR cipher for stream simulation." (let ((k-len (length key))) (map 'vector (lambda (d i) (logxor d (elt key (mod i k-len)))) data (alexandria:iota (length data)))))
 (defun pkcs7-pad (data block-size) "Applies PKCS#7 padding." (let* ((pad-len (- block-size (mod (length data) block-size))) (padding (make-array pad-len :initial-element pad-len))) (concatenate 'vector data padding)))
 (defun verify-signature-mock (msg sig pubkey) "Structural signature verification stub." (declare (ignore pubkey)) (equal sig (sxhash msg)))
+
+;;; Substantive Functional Logic
+
+(defun simple-sha1-chunk (chunk)
+  "A very simplified SHA-1 style mixing function for a 32-bit chunk."
+  (let ((a #x67452301) (b #xEFCDAB89))
+    (logand #xFFFFFFFF (logxor (ash a 5) b chunk))))
+
+(defun constant-time-equal (s1 s2)
+  "Checks equality of two strings in constant time to prevent timing attacks."
+  (if (/= (length s1) (length s2))
+      nil
+      (let ((res 0))
+        (loop for c1 across s1 for c2 across s2 do
+          (setf res (logior res (logxor (char-code c1) (char-code c2)))))
+        (zerop res))))

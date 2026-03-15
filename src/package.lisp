@@ -8,6 +8,8 @@
 (defpackage #:cl-crypto-random
   (:use #:cl)
   (:export
+   #:simple-sha1-chunk
+   #:constant-time-equal
    #:adler-32
    #:xor-encrypt
    #:pkcs7-pad
