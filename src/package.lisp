@@ -8,7 +8,11 @@
 (defpackage #:cl-crypto-random
   (:use #:cl)
   (:export
-   #:with-crypto-random-timing
+   #:adler-32
+   #:xor-encrypt
+   #:pkcs7-pad
+   #:verify-signature-mock
+#:with-crypto-random-timing
    #:crypto-random-batch-process
    #:crypto-random-health-check;; Random generation
    #:crypto-random-bytes

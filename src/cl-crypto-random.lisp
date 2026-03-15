@@ -66,3 +66,11 @@ Returns (values processed-results error-alist)."
     (if (validate-crypto-random ctx)
         :healthy
         :degraded)))
+
+
+;;; Substantive Domain Expansion
+
+(defun adler-32 (data) "Computes Adler-32 checksum." (let ((a 1) (b 0)) (loop for x across (coerce data 'vector) do (setf a (mod (+ a x) 65521) b (mod (+ b a) 65521))) (logior (ash b 16) a)))
+(defun xor-encrypt (data key) "Simple XOR cipher for stream simulation." (let ((k-len (length key))) (map 'vector (lambda (d i) (logxor d (elt key (mod i k-len)))) data (alexandria:iota (length data)))))
+(defun pkcs7-pad (data block-size) "Applies PKCS#7 padding." (let* ((pad-len (- block-size (mod (length data) block-size))) (padding (make-array pad-len :initial-element pad-len))) (concatenate 'vector data padding)))
+(defun verify-signature-mock (msg sig pubkey) "Structural signature verification stub." (declare (ignore pubkey)) (equal sig (sxhash msg)))
