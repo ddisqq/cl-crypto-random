@@ -8,7 +8,9 @@
 (defpackage #:cl-crypto-random
   (:use #:cl)
   (:export
-   ;; Random generation
+   #:with-crypto-random-timing
+   #:crypto-random-batch-process
+   #:crypto-random-health-check;; Random generation
    #:crypto-random-bytes
    #:crypto-random-integer
    #:generate-key

@@ -7,13 +7,16 @@
 
 (asdf:defsystem #:cl-crypto-random
   :description "Cryptographic random byte generation"
-  :author "Parkian Company LLC"
+  :author "Park Ian Co"
   :license "Apache-2.0"
   :version "0.1.0"
   :serial t
   :components ((:file "package")
                (:module "src"
-                :components ((:file "crypto-random")))))
+                :components ((:file "package")
+                             (:file "conditions" :depends-on ("package"))
+                             (:file "types" :depends-on ("package"))
+                             (:file "cl-crypto-random" :depends-on ("package" "conditions" "types")))))))
 
 (asdf:defsystem #:cl-crypto-random/test
   :description "Tests for cl-crypto-random"
